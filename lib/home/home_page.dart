@@ -14,46 +14,49 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Book Manager')),
-      body: PageView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: pageController,
-        children: <Widget>[
-          BooksPage(),
-          LentPage(),
-          AccountPage(),
-          SettingsPage(),
-        ],
-      ),
-      bottomNavigationBar: Obx(
-        () => BottomNavigationBar(
-          unselectedItemColor: Colors.grey,
-          selectedItemColor: Colors.blue,
-          showUnselectedLabels: true,
-          currentIndex: controller.currentButtonIndex,
-          onTap: (index) {
-            controller.currentButtonIndex = index;
-            pageController.jumpToPage(index);
-          },
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.book),
-              label: 'Books',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.shop),
-              label: 'Lent',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.people),
-              label: 'Account',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.settings),
-              label: 'Settings',
-            ),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        appBar: AppBar(title: const Text('Book Manager')),
+        body: PageView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: pageController,
+          children: <Widget>[
+            BooksPage(),
+            LentPage(),
+            AccountPage(),
+            SettingsPage(),
           ],
+        ),
+        bottomNavigationBar: Obx(
+          () => BottomNavigationBar(
+            unselectedItemColor: Colors.grey,
+            selectedItemColor: Colors.blue,
+            showUnselectedLabels: true,
+            currentIndex: controller.currentButtonIndex,
+            onTap: (index) {
+              controller.currentButtonIndex = index;
+              pageController.jumpToPage(index);
+            },
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.book),
+                label: 'Books',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.shop),
+                label: 'Lent',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.people),
+                label: 'Account',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.settings),
+                label: 'Settings',
+              ),
+            ],
+          ),
         ),
       ),
     );
