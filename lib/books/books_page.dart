@@ -11,10 +11,22 @@ class BooksPage extends StatelessWidget {
         children: [
           TextFormField(
             decoration: InputDecoration(
+              hintText: 'Book name & Author name',
+              contentPadding: const EdgeInsets.symmetric(
+                vertical: 3.0,
+                horizontal: 6.0,
+              ),
               border: const OutlineInputBorder(),
               focusedBorder: OutlineInputBorder(
                 borderSide:
                     BorderSide(color: Theme.of(context).colorScheme.primary),
+              ),
+              suffixIcon: IconButton(
+                onPressed: () {},
+                iconSize: 16,
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
+                icon: const Icon(Icons.clear),
               ),
             ),
           ),
