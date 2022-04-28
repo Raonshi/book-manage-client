@@ -4,7 +4,6 @@ import 'package:book_manager/books/local_widget/book_widget_shimmer.dart';
 import 'package:book_manager/common/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 
 class BooksPage extends StatelessWidget {
   BooksPage({Key? key}) : super(key: key);

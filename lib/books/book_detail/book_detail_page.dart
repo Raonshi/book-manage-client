@@ -8,61 +8,140 @@ class BookDetailPage extends GetView<BookDetailCtrl> {
   @override
   Widget build(BuildContext context) {
     controller.book = Get.arguments;
+
     return Scaffold(
       appBar: AppBar(title: Text(controller.book?['title'] ?? '')),
-      body: Container(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              _buildBookImage(),
-              const Divider(
-                height: 10,
-                thickness: 2,
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _buildBookImage(),
+            const Divider(
+              height: 10,
+              thickness: 2,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 8.0,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                  vertical: 8.0,
-                ),
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: 100,
-                      child: Text(
-                        'TITLE',
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 100,
+                    child: Text(
+                      'TITLE',
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
-                    Text(
-                      controller.book?['title'] ?? '',
+                  ),
+                  Text(
+                    controller.book?['title'] ?? '',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 8.0,
+              ),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 100,
+                    child: Text(
+                      'AUTHOR',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ),
+                  Text(
+                    controller.book?['author'] ?? '',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 8.0,
+              ),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 100,
+                    child: Text(
+                      'PRICE',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ),
+                  Text(
+                    'USD ${controller.book?['price'] ?? ''}',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 8.0,
+              ),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 100,
+                    child: Text(
+                      'REMAIN',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ),
+                  Obx(
+                    () => Text(
+                      '${controller.book!['count'] - controller.book!['lent']}',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                  vertical: 8.0,
+            ),
+            SizedBox(height: Get.size.height * 0.2),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 75,
+                  margin: const EdgeInsets.only(right: 30),
+                  child: ElevatedButton(
+                    onPressed: () =>
+                        controller.book?['lent'] <= controller.book?['count']
+                            ? Get.defaultDialog(
+                                title: 'Info',
+                                content: Text('There is no book'),
+                                onCancel: () {},
+                              )
+                            : controller.lentBook(),
+                    child: const Text('Lent'),
+                  ),
                 ),
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: 100,
-                      child: Text(
-                        'AUTHOR',
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                    ),
-                    Text(
-                      controller.book?['author'] ?? '',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ],
+                Container(
+                  width: 75,
+                  margin: const EdgeInsets.only(left: 30),
+                  child: ElevatedButton(
+                    onPressed: () => controller.book?['lent'] == 0
+                        ? Get.defaultDialog(
+                            title: 'Info',
+                            content: Text('The book has returned fully'),
+                            onCancel: () {},
+                          )
+                        : controller.returnBook(),
+                    child: const Text('Return'),
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
+          ],
         ),
       ),
     );

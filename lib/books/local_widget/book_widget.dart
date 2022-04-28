@@ -8,6 +8,7 @@ class BookWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final int remain = book['count'] - book['lent'];
     return InkWell(
       child: Row(
         children: [
@@ -36,7 +37,7 @@ class BookWidget extends StatelessWidget {
                           text: 'Remain ',
                           style: Theme.of(context).textTheme.bodySmall),
                       TextSpan(
-                          text: book['remain'].toString(),
+                          text: '$remain',
                           style: Theme.of(context).textTheme.bodySmall),
                     ],
                   ),

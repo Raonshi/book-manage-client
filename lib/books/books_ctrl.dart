@@ -58,4 +58,22 @@ class BooksCtrl extends GetxController {
 
     return searchedBooks;
   }
+
+  bool updateBookInfo(Map<String, dynamic> updatedBook) {
+    bool result = false;
+    searchedBooks.clear();
+    searchedBooks.addAll(
+      books.map(
+        (book) {
+          if (book['id'] == updatedBook['id']) {
+            result = true;
+            return updatedBook;
+          } else {
+            return book;
+          }
+        },
+      ),
+    );
+    return result;
+  }
 }
