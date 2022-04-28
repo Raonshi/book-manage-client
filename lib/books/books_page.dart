@@ -1,7 +1,17 @@
+import 'package:book_manager/books/books_ctrl.dart';
+import 'package:book_manager/books/local_widget/book_widget.dart';
+import 'package:book_manager/books/local_widget/book_widget_shimmer.dart';
+import 'package:book_manager/common/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 
 class BooksPage extends StatelessWidget {
-  const BooksPage({Key? key}) : super(key: key);
+  BooksPage({Key? key}) : super(key: key);
+
+  final controller = Get.put(BooksCtrl());
+
+  final TextEditingController textEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -10,6 +20,14 @@ class BooksPage extends StatelessWidget {
       child: Column(
         children: [
           TextFormField(
+            controller: textEditingController,
+            onChanged: (_) {
+              controller.keyword = textEditingController.text;
+
+              debouncer(controller.debounce, () {
+                controller.searchBook();
+              });
+            },
             decoration: InputDecoration(
               hintText: 'Book name & Author name',
               contentPadding: const EdgeInsets.symmetric(
@@ -31,19 +49,16 @@ class BooksPage extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: 50,
-              itemBuilder: (context, index) => ListTile(
-                title: Text('Book Title'),
-                subtitle: Text('Book author'),
-                leading: Container(
-                  width: 50,
-                  height: 50,
-                  decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primaryContainer),
-                  child: Text('Book Image'),
-                ),
-                trailing: Icon(Icons.arrow_forward_ios),
+            child: Obx(
+              () => ListView.builder(
+                itemCount: controller.searchedBooks.length,
+                itemBuilder: (context, index) => controller.isLoad
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child:
+                            BookWidget(book: controller.searchedBooks[index]),
+                      )
+                    : BookWdigetShimmer(),
               ),
             ),
           ),

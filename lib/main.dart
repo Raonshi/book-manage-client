@@ -1,3 +1,4 @@
+import 'package:book_manager/common/route.dart';
 import 'package:book_manager/home/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,6 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       home: HomePage(),
+      getPages: routes,
       builder: ((context, child) {
         return child!;
       }),
