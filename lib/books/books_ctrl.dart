@@ -1,8 +1,6 @@
 import 'dart:async';
-
 import 'package:book_manager/books/books_repository.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 
 class BooksCtrl extends GetxController {
   final _isLoad = true.obs;
@@ -41,14 +39,11 @@ class BooksCtrl extends GetxController {
       return;
     }
 
-    Logger().d(searchText);
-
     List result = books.where(
       (book) {
         final String title = book['title'];
         final String author = book['author'];
 
-        Logger().d(title);
         return title.toLowerCase().replaceAll(' ', '').contains(searchText) ||
             author.toLowerCase().replaceAll(' ', '').contains(searchText);
       },
@@ -62,6 +57,7 @@ class BooksCtrl extends GetxController {
   bool updateBookInfo(Map<String, dynamic> updatedBook) {
     bool result = false;
     searchedBooks.clear();
+
     searchedBooks.addAll(
       books.map(
         (book) {

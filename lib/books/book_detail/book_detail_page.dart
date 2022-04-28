@@ -115,10 +115,10 @@ class BookDetailPage extends GetView<BookDetailCtrl> {
                   margin: const EdgeInsets.only(right: 30),
                   child: ElevatedButton(
                     onPressed: () =>
-                        controller.book?['lent'] <= controller.book?['count']
+                        controller.book?['lent'] >= controller.book?['count']
                             ? Get.defaultDialog(
                                 title: 'Info',
-                                content: Text('There is no book'),
+                                content: const Text('There is no book'),
                                 onCancel: () {},
                               )
                             : controller.lentBook(),
@@ -132,7 +132,7 @@ class BookDetailPage extends GetView<BookDetailCtrl> {
                     onPressed: () => controller.book?['lent'] == 0
                         ? Get.defaultDialog(
                             title: 'Info',
-                            content: Text('The book has returned fully'),
+                            content: const Text('The book has returned fully'),
                             onCancel: () {},
                           )
                         : controller.returnBook(),

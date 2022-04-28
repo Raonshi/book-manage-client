@@ -8,7 +8,7 @@ class BookDetailCtrl extends GetxController {
 
   lentBook() {
     int lent =
-        book?['count'] <= book?['lent'] ? book!['lent'] + 1 : book!['lent'];
+        book?['count'] >= book?['lent'] ? book!['lent'] + 1 : book!['lent'];
 
     final Map<String, dynamic> updatedBook = {
       'id': book?['id'] ?? 00000,
